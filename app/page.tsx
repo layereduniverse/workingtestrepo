@@ -1,4 +1,27 @@
-import Image from "next/image";
+'use client'
+import { Canvas } from "@react-three/fiber";
+import { Center, useGLTF } from "@react-three/drei";
+
+function Model() {
+  // CHANGE MODEL
+  const { scene } = useGLTF("/tiger/scene.gltf");
+    
+  // useMemo(() => {
+  //   scene.traverse((child) => {
+  //     if (child.isMesh) {
+  //       child.material = new MeshStandardMaterial({
+  //         color: 0xffd700,  // GOLD COLOR
+  //         metalness: 1,
+  //         roughness: 0.1,
+  //       })
+  //       child.castShadow = true
+  //       child.receiveShadow = true
+  //     }
+  //   })
+  // }, [scene])
+
+  return <primitive object={scene} scale={1.5}/>
+}
 
 export default function Home() {
   return (
@@ -8,6 +31,14 @@ export default function Home() {
             The Layered Universe
           </h2>
       </div>
+
+      <Canvas shadows camera={{ position: [4, 1.5, 8], fov: 35 }}>
+        <group position={[0, -0.5, 0]}>
+          <Center top>
+            <Model />
+          </Center>
+        </group>
+      </Canvas>
     </main>
   );
 }
