@@ -10,15 +10,15 @@ function Model() {
     
   useMemo(() => {
     scene.traverse((child) => {
-      // if (child.isMesh) {
-      //   child.material = new MeshStandardMaterial({
-      //     color: 0xffd700,  // GOLD COLOR
-      //     metalness: 1,
-      //     roughness: 0.1,
-      //   })
-      //   child.castShadow = true
-      //   child.receiveShadow = true
-      // }
+      if (child.isMesh) {
+        // child.material = new MeshStandardMaterial({
+        //   color: 0xffd700,  // GOLD COLOR
+        //   metalness: 1,
+        //   roughness: 0.1,
+        // })
+        child.castShadow = true
+        child.receiveShadow = true
+      }
     })
   }, [scene])
 
