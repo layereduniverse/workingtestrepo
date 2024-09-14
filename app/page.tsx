@@ -1,24 +1,26 @@
 'use client'
+import React, { useMemo } from 'react'
 import { Canvas } from "@react-three/fiber";
-import { Center, useGLTF } from "@react-three/drei";
+import { MeshStandardMaterial } from "three";
+import { Environment, Center, AccumulativeShadows, RandomizedLight, OrbitControls, useGLTF, useFBX } from "@react-three/drei";
 
 function Model() {
   // CHANGE MODEL
   const { scene } = useGLTF("/tiger/scene.gltf");
     
-  // useMemo(() => {
-  //   scene.traverse((child) => {
-  //     if (child.isMesh) {
-  //       child.material = new MeshStandardMaterial({
-  //         color: 0xffd700,  // GOLD COLOR
-  //         metalness: 1,
-  //         roughness: 0.1,
-  //       })
-  //       child.castShadow = true
-  //       child.receiveShadow = true
-  //     }
-  //   })
-  // }, [scene])
+  useMemo(() => {
+    scene.traverse((child) => {
+      if (child.isMesh) {
+        child.material = new MeshStandardMaterial({
+          color: 0xffd700,  // GOLD COLOR
+          metalness: 1,
+          roughness: 0.1,
+        })
+        child.castShadow = true
+        child.receiveShadow = true
+      }
+    })
+  }, [scene])
 
   return <primitive object={scene} scale={1.5}/>
 }
@@ -38,6 +40,8 @@ export default function Home() {
             <Model />
           </Center>
         </group>
+        <OrbitControls minPolarAngle={0} maxPolarAngle={Math.PI / 2} />
+        <Environment preset="city" />
       </Canvas>
     </main>
   );
